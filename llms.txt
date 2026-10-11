@@ -1,0 +1,15 @@
+# agentic-approve
+
+Review queue for agent output: edit, approve, reject, audit.
+
+Keywords: approval, review-queue, agentic-suite, claude-code, codex, cli, mcp.
+
+- SDK: import { QueueService } from "agentic-approve".
+- CLI: agentic-approve submit --source "..." --kind "..." --title "..." --body "...".
+- MCP: run agentic-approve mcp, then call approve_submit.
+
+## Docs
+
+- README: https://github.com/pooriaarab/agentic-approve
+- Core contract: https://github.com/pooriaarab/agentic-approve/blob/main/docs/agentic-core.md
+- License: MIT

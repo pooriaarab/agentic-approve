@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "agentic-approve": {
+      "command": "npx",
+      "args": ["-y", "agentic-approve", "mcp"]
+    }
+  }
+}

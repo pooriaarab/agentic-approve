@@ -1,0 +1,9 @@
+{
+  // Sample worker config. Run wrangler deploy from the pack root.
+  "name": "agentic-approve",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-01-01",
+  "vars": {
+    "PACK_NAME": "agentic-approve"
+  }
+}
