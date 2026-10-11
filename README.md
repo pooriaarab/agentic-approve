@@ -8,9 +8,10 @@ decided what and when.
 
 ## How it works
 
-The pack gives one queue with three faces: a terminal command, an
-npm import, and an MCP server. Filing stays open, so any tool can
-file. Decisions need a reviewer name. All output is JSON.
+The pack gives one queue with four faces: a terminal command, an
+npm import, an MCP server, and an edge worker with a review
+console. Filing stays open, so any tool can file. Decisions need
+a reviewer name. CLI and API output is JSON.
 
 Local files back the queue by default. It runs with no keys and no
 network. Set env vars to move the queue to D1, the bodies to R2,
@@ -53,11 +54,46 @@ Start the MCP server:
 agentic-approve mcp
 ```
 
-## Three usecases
+## Four usecases
 
-1. You hold each agent draft for review before you send it.
-2. You fix a queued draft, then approve the fixed text.
-3. You read the audit log to see who approved each item.
+1. Posts. An agent drafts a launch post. You read it in the
+console, fix the date, and approve it. The post ships only
+after your decision lands in the audit log.
+2. Messages. A support bot drafts replies. Each reply waits in
+the queue with kind `message`. You approve the good ones and
+reject the rest with a reason the bot can learn from.
+3. Calls. A voice agent files call summaries and follow-up
+scripts. You scan the queue each morning, edit one script,
+and approve the batch before the dialer runs.
+4. Postcards. A print job files card copy and art notes. You
+hold the run, fix a typo in one card, approve the set, and
+read the audit log to prove who signed each card.
+
+Run the post flow end to end with the sample file:
+
+```sh
+agentic-approve submit --source writer --kind post --title "Launch post" --file examples/sample-post.md
+agentic-approve list --status pending
+APPROVE_ACTOR=ruth agentic-approve edit --id <id> --title "Launch post v2"
+APPROVE_ACTOR=ruth agentic-approve approve --id <id> --reason "Ships Tuesday."
+agentic-approve audit --id <id>
+```
+
+## Worker
+
+The worker serves a review console and a JSON API from one
+deploy. Open `/` in a browser to file, read, edit, approve,
+and reject items, and to read the audit log. The API serves
+`/health`, `/queue`, `/item`, `/audit`, `/submit`, `/edit`,
+and `/decide`. Deploy it with wrangler:
+
+```sh
+npx wrangler deploy
+```
+
+The worker keeps its queue in memory per isolate. Use the
+CLI or the library with file, D1, and R2 backends when the
+queue must survive restarts.
 
 ## Backends
 
@@ -112,7 +148,7 @@ publish workflow ships only when the version is new.
 - `src/index.ts`: the library face.
 - `src/cli.ts`: the terminal face.
 - `src/mcp.ts`: the MCP server. `src/mcp-bin.ts` starts it.
-- `src/worker.ts`: the edge worker face.
+- `src/worker.ts`: the edge worker face: review console plus JSON API.
 - `src/service.ts`: the queue rules.
 - `src/store.ts`: the domain and the memory backends.
 - `src/local.ts`: the file backends.
@@ -121,6 +157,8 @@ publish workflow ships only when the version is new.
 - `src/access.ts`: the Access gate.
 - `agentic-core.d.ts`: the frozen contract.
 - `docs/agentic-core.md`: the contract in plain words.
+- `docs/onboarding.md`: first review in five minutes.
+- `examples/sample-post.md`: sample body for the post flow.
 
 ## License
 

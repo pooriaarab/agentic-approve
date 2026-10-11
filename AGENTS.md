@@ -5,14 +5,15 @@ Review queue for agent output: edit, approve, reject, audit.
 ## Mental model
 
 Tools file drafts. Reviewers edit, approve, or reject them. Each
-step lands in the audit log. One queue serves all three faces, so
+step lands in the audit log. One queue serves all four faces, so
 each face returns the same shape.
 
-## The three faces
+## The four faces
 
 - SDK: `import { QueueService } from "agentic-approve"`.
 - CLI: `npx agentic-approve submit --source "..." --kind "..." --title "..." --body "..."`.
 - MCP: `npx agentic-approve mcp`, then call a tool below.
+- Worker: deploy with wrangler, open `/` for the review console.
 
 Keywords: approval, review-queue, agentic-suite, claude-code, codex, cli, mcp.
 

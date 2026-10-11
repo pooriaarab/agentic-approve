@@ -33,6 +33,12 @@ Start the server with `agentic-approve mcp`. Call `approve_submit`
 to file, `approve_show` to read, `approve_approve` or
 `approve_reject` to decide, `approve_audit` to review history.
 
+## Use the worker
+
+Deploy with `npx wrangler deploy`. Open `/` for the review
+console. The same deploy serves `/queue`, `/item`, `/audit`,
+`/submit`, `/edit`, and `/decide` as JSON.
+
 ## Rules
 
 - Preview each file, edit, and decision with dry run first.

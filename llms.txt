@@ -7,6 +7,7 @@ Keywords: approval, review-queue, agentic-suite, claude-code, codex, cli, mcp.
 - SDK: import { QueueService } from "agentic-approve".
 - CLI: agentic-approve submit --source "..." --kind "..." --title "..." --body "...".
 - MCP: run agentic-approve mcp, then call approve_submit.
+- Worker: deploy with wrangler, open / for the review console.
 
 ## Docs
 
